@@ -17,45 +17,47 @@ public class ReadWrite {
 		return matcher.find()||s.isEmpty();
 	}
 	
-	public String readOrWrite(String FILENAME,char operation,String[] writeLine){
+	public String Write(String FILENAME,String[] writeLine){
 		String result = "";
 		
 		if (isInvalidInput(FILENAME)){
 			return "Entrada invalida";
 		}
 		
-	    if (operation == 'R' || operation == 'r'){
-
-			try (BufferedReader br = new BufferedReader(new FileReader(FILENAME));){
-				
-				String sCurrentLine;
-				while ((sCurrentLine = br.readLine()) != null) {
-					result+=sCurrentLine+"\n";
-				}
-			} catch (IOException e) {
-				result = "Arquivo inexistente";
-			} 
+		if (writeLine==null){
+			writeLine = new String[]{};
 		}
 		
-		else if (operation == 'W' || operation == 'w'){
-			
-			if (writeLine==null){
-				writeLine = new String[]{};
+		try(BufferedWriter buffWrite = new BufferedWriter(new FileWriter(FILENAME));)
+		{
+			for (int i=0;i<writeLine.length;i++){
+				buffWrite.append(writeLine[i] + "\n");
 			}
+			result = "Escrita realizada";
+		} catch (IOException e) {
+			result = "Arquivo invalido";
+		} 
+		
+		return result;
+	}
+	
+	public String Read(String FILENAME){
+		String result = "";
+		
+		if (isInvalidInput(FILENAME)){
+			return "Entrada invalida";
+		}
+		
+		try (BufferedReader br = new BufferedReader(new FileReader(FILENAME));){
 			
-			try(BufferedWriter buffWrite = new BufferedWriter(new FileWriter(FILENAME));)
-			{
-				for (int i=0;i<writeLine.length;i++){
-					buffWrite.append(writeLine[i] + "\n");
-				}
-				result = "Escrita realizada";
-			} catch (IOException e) {
-				result = "Arquivo invalido";
-			} 
-		}
-		else{
-			result = "Operacao invalida";
-		}
+			String sCurrentLine;
+			while ((sCurrentLine = br.readLine()) != null) {
+				result+=sCurrentLine+"\n";
+			}
+		} catch (IOException e) {
+			result = "Arquivo inexistente";
+		} 
+		
 	    return result;
 	}
 }

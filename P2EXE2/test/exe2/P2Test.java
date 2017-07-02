@@ -17,31 +17,25 @@ public class P2Test {
 	@Test
 	public void invalidFileNameTest() {
 		String filename = "abaster@virus.com";
-		assertEquals("Entrada invalida",vClass.readOrWrite(filename, 'r', null));
-	}
-	
-	@Test
-	public void invalidOperationTest() {
-		String filename = "abaster.txt";
-		assertEquals("Operacao invalida",vClass.readOrWrite(filename, 't', null));
+		assertEquals("Entrada invalida",vClass.Read(filename));
 	}
 	
 	@Test
 	public void readNotExistingFileTest() {
 		String filename = "abaster1.txt";
-		assertEquals("Arquivo inexistente",vClass.readOrWrite(filename, 'r', null));
+		assertEquals("Arquivo inexistente",vClass.Read(filename));
 	}
 	
 	@Test
 	public void writeToFileTest() {
 		String filename = "abaster.txt";
-		assertEquals("Escrita realizada",vClass.readOrWrite(filename, 'w', new String[]{"uau"}));
+		assertEquals("Escrita realizada",vClass.Write(filename, new String[]{"uau"}));
 	}
 	
 	@Test
 	public void writeToThanReadFileTest() {
 		String filename = "abaster.txt";
-		assertEquals("Escrita realizada",vClass.readOrWrite(filename, 'w', new String[]{"uau"}));
-		assertEquals("uau\n",vClass.readOrWrite(filename, 'r', null));
+		assertEquals("Escrita realizada",vClass.Write(filename, new String[]{"uau"}));
+		assertEquals("uau\n",vClass.Read(filename));
 	}
 }
